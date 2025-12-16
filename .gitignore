@@ -1,0 +1,104 @@
+# =========================================
+# Python
+# =========================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.conda/
+pip-wheel-metadata/
+
+# Packaging / build
+build/
+dist/
+.eggs/
+*.egg-info/
+.installed.cfg
+pip-log.txt
+
+# Test / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.cover/
+*.cover
+nosetests.xml
+coverage.xml
+*.xml
+*.log
+
+# Type checking / linting
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDEs / editors
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# =========================================
+# Django
+# =========================================
+*.sqlite3
+db.sqlite3
+db.sqlite3-journal
+
+# Django local settings / secrets
+.env
+.env.*
+*.env
+local_settings.py
+settings_local.py
+
+# Media / static outputs
+media/
+staticfiles/
+
+# Collected static (if you use collectstatic)
+static_collected/
+
+# Logs
+logs/
+*.log
+
+# Django cache / sessions (optional; keep if you store them as files)
+cache/
+sessions/
+
+# =========================================
+# Celery / background tasks (optional)
+# =========================================
+celerybeat-schedule
+celerybeat.pid
+
+# =========================================
+# Documentation builds (optional)
+# =========================================
+docs/_build/
+
+# =========================================
+# If using Docker (optional)
+# =========================================
+*.pid

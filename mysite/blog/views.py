@@ -2,8 +2,20 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 from django.shortcuts import get_object_or_404, render
+from django.views.generic import ListView
 
 from .models import FavouritePost, Post
+
+class PostListView(ListView):
+    """
+    Alternative Post list view
+    
+    """
+    queryset = Post.published.all()
+    context_object_name = 'posts'
+    paginate_by = 3
+    template_name = 'post/list.html'
+
 
 
 def post_list(request):

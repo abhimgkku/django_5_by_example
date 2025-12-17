@@ -1,9 +1,13 @@
 from django.urls import path
+
 from . import views
 
-app_name ='blog' # here we are defining namespace with app_name variable and its value is same as the name of the application.
+app_name = 'blog'
 
 urlpatterns = [
-    path('',views.post_list,name='post_list'),
-    path('<int:id>/',views.post_detail,name='post_detail')
+    # post views
+    path('', views.post_list, name='post_list'),
+    path('<int:year>/<int:month>/<int:day>/<slug:post>', views.post_detail, name='post_detail'),
+    path('favrourite/add/<int:id>/', views.add_favourite, name='add_favourite'),
+    path('favourites/', views.favourites, name='favourites'),
 ]

@@ -1,20 +1,28 @@
-from django.db import models
-from django.utils import timezone
 from django.conf import settings
+from django.db import models
+from django.urls import reverse
+from django.utils import timezone
 
-# Create your models here.
+
 class PublishedManager(models.Manager):
     def get_queryset(self):
-        return (super().get_queryset().filter(status=Post.Status.PUBLISHED))
+        return (
+            super().get_queryset().filter(status=Post.Status.PUBLISHED)
+        )
+
+class FavouritePost(models.Model):
+    pk = models.CompositePrimaryKey("user", "post")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
 
 
 class Post(models.Model):
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'
         PUBLISHED = 'PB', 'Published'
-        
     title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250)
+    slug = models.SlugField(max_length=250,unique_for_date='publish')
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -29,15 +37,25 @@ class Post(models.Model):
         choices=Status,
         default=Status.DRAFT
     )
-    objects = models.Manager()
-    published = PublishedManager()
+
+    objects = models.Manager()  # The default manager.
+    published = PublishedManager()  # Our custom manager.
+
     class Meta:
         ordering = ['-publish']
         indexes = [
-            models.Index(fields=['-publish'])
+            models.Index(fields=['-publish']),
         ]
-    
-    def __repr__(self)->str:
-         return f"Post(id={self.pk}, title={self.title!r})"
-    
 
+    def __str__(self):
+        return self.title
+    
+    def get_absolute_url(self):
+        return reverse(
+            'blog:post_detail',
+            args=[
+                self.publish.year,
+                self.publish.month,
+                self.publish.day,
+                self.slug
+        )

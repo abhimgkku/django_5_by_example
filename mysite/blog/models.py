@@ -57,5 +57,5 @@ class Post(models.Model):
                 self.publish.year,
                 self.publish.month,
                 self.publish.day,
-                self.slug
+                self.slug]
         )
